@@ -1,4 +1,4 @@
-document.body.onload = createGrid;
+document.body.onload = createGrid(16,16);
 
 function addRow() {
   // create a new div element
@@ -18,19 +18,29 @@ function addCol() {
 
 function addSquare(numSquares) {
     const newDiv=document.createElement("div");
-    newDiv.className=`square-${numSquares}`;
+    newDiv.id=`square-${numSquares}`;
+    newDiv.className='square';
     const currentDiv = document.querySelector(".col");
     currentDiv.insertAdjacentElement('afterbegin',newDiv);
 }
 
-function createGrid() {
+function createGrid(x,y) {
     var numSquares=1;
-    for (let row =0; row<5;row++){
+    for (let row =0; row<x;row++){
         addRow();
-        for (let col=0;col<5;col++){
+        for (let col=0;col<y;col++){
             addCol();
             addSquare(numSquares);
             numSquares++;
         }
     }
 }
+
+const allItemsInClass = document.getElementsByClassName("square");
+
+for (var i=0; i< allItemsInClass.length; i++ ) {
+    allItemsInClass[i].addEventListener("mouseover", (event) => {
+        document.getElementById(event.target.id).style.backgroundColor="black";
+    });
+  }
+
