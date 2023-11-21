@@ -1,5 +1,5 @@
 var setSize = 16;
-const grid = document.querySelector(".grid");
+var grid = document.querySelector(".grid");
 document.body.onload = createGrid(setSize);
 
 function addSquare(numSquares) {
@@ -29,9 +29,9 @@ function destroyGrid(firstNode){
 
 const getBtn = document.querySelector(".btn");
 getBtn.addEventListener("click", function() {
-    const getColValue = document.getElementById("col-name").value;
+    let getColValue = document.getElementById("col-name").value;
+    if (getColValue>100) {alert("Maximum Grid Size: 100");return ;}
     setSize = getColValue;
-    console.log(setSize);
     const firstNode = document.querySelector(".grid");
     destroyGrid(firstNode);
     createGrid(setSize);
@@ -39,7 +39,7 @@ getBtn.addEventListener("click", function() {
   });
 
 grid.addEventListener("mouseover", (event) => {
-        document.getElementById(event.target.id).style.backgroundColor="black";
+        event.target.style.backgroundColor="black";
  });
 
 
