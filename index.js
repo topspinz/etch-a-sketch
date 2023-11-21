@@ -1,46 +1,45 @@
-document.body.onload = createGrid(16,16);
-
-function addRow() {
-  // create a new div element
-  const newDiv = document.createElement('div');
-  newDiv.className='row';
-  const currentDiv = document.querySelector(".grid");
-  currentDiv.insertAdjacentElement('afterbegin',newDiv);
-}
-
-function addCol() {
-    const newDiv=document.createElement("div");
-    newDiv.className="col";
-    const currentDiv = document.querySelector(".row");
-    currentDiv.insertAdjacentElement('afterbegin',newDiv);
-}
-
+var setSize = 16;
+const grid = document.querySelector(".grid");
+document.body.onload = createGrid(setSize);
 
 function addSquare(numSquares) {
+    let squareSize = document.querySelector('.grid').clientWidth / setSize;
+    const currentDiv = document.querySelector(".grid");
     const newDiv=document.createElement("div");
+    currentDiv.appendChild(newDiv);
     newDiv.id=`square-${numSquares}`;
     newDiv.className='square';
-    const currentDiv = document.querySelector(".col");
-    currentDiv.insertAdjacentElement('afterbegin',newDiv);
+    newDiv.style.width = squareSize + "px";
+    newDiv.style.height = squareSize + "px";
 }
 
-function createGrid(x,y) {
+function createGrid(setSize) {
     var numSquares=1;
-    for (let row =0; row<x;row++){
-        addRow();
-        for (let col=0;col<y;col++){
-            addCol();
+    for (let row =0; row<setSize*setSize;row++){
             addSquare(numSquares);
             numSquares++;
-        }
     }
 }
 
-const allItemsInClass = document.getElementsByClassName("square");
+function destroyGrid(firstNode){
+    while(firstNode.firstChild){
+        firstNode.removeChild(firstNode.lastChild);
+    }
+}
 
-for (var i=0; i< allItemsInClass.length; i++ ) {
-    allItemsInClass[i].addEventListener("mouseover", (event) => {
+const getBtn = document.querySelector(".btn");
+getBtn.addEventListener("click", function() {
+    const getColValue = document.getElementById("col-name").value;
+    setSize = getColValue;
+    console.log(setSize);
+    const firstNode = document.querySelector(".grid");
+    destroyGrid(firstNode);
+    createGrid(setSize);
+    
+  });
+
+grid.addEventListener("mouseover", (event) => {
         document.getElementById(event.target.id).style.backgroundColor="black";
-    });
-  }
+ });
+
 
